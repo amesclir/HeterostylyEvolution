@@ -1,0 +1,35 @@
+
+R version 3.4.2 (2017-09-28) -- "Short Summer"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R es un software libre y viene sin GARANTIA ALGUNA.
+Usted puede redistribuirlo bajo ciertas circunstancias.
+Escriba 'license()' o 'licence()' para detalles de distribucion.
+
+R es un proyecto colaborativo con muchos contribuyentes.
+Escriba 'contributors()' para obtener más información y
+'citation()' para saber cómo citar R o paquetes de R en publicaciones.
+
+Escriba 'demo()' para demostraciones, 'help()' para el sistema on-line de ayuda,
+o 'help.start()' para abrir el sistema de ayuda HTML con su navegador.
+Escriba 'q()' para salir de R.
+
+[Previously saved workspace restored]
+
+> ##library(ape)
+> ##library(phytools)
+> ##tree <- read.tree(file= "PhytoPhylo.tre")
+> ## get a list of all genera
+> ##tips<-tree$tip.label
+> ##genera<-unique(sapply(strsplit(tips,"_"),function(x) x[1]))
+> ## here are our genera
+> ##genera
+> ##ii<-sapply(genera,function(x,y) grep(x,y)[1],y=tips)
+> ##tree2<-drop.tip(tree,setdiff(tree$tip.label,tips[ii]))
+> ##write.tree(tree2, file= "PhytoPhylo2.tre")
+> write(tree2$tip.label, file = "tips.txt")
+> 
+> proc.time()
+   user  system elapsed 
+  0.484   0.378   1.982 

@@ -1,0 +1,49 @@
+---
+title: "HeterostylyEvolution"
+author: "Marcial Escudero"
+date: "February 25, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+library(ape)
+library(phytools)
+tree <- read.tree(file= "./run2/GBOTB.tre")
+## get a list of all genera
+tips<-tree$tip.label
+tips
+genera<-unique(sapply(strsplit(tips,"_"),function(x) x[1]))
+## here are our genera
+genera
+length(genera)
+ii<-sapply(genera,function(x,y) grep(x,y)[1],y=tips)
+tree2<-drop.tip(tree,setdiff(tree$tip.label,tips[ii]))
+write.tree(tree2, file= "GBOTB2.tre")
+write(tree2$tip.label, file = "tips.txt")
+
+#Create a list of genera with floral evolution
+mydata <- read.csv(file="FlowerEvolution.csv")
+tips2 <- unique(mydata[,2])
+tips2 <- gsub('([[:punct:]])|\\s+','_',tips2)
+tips2
+genera2<-unique(sapply(strsplit(tips2,"_"),function(x) x[1]))
+genera2
+length(genera2)
+
+mytree <- read.tree(file= "./run2/GBOTB2.tre")
+mytree
+mytree$tip.label
+genera3<-unique(sapply(strsplit(mytree$tip.label,"_"),function(x) x[1]))
+genera3
+length(genera3)
+iii<-sapply(genera3,function(x,y) grep(x,y)[1],y=mytree$tip.label)
+mytree2<-drop.tip(mytree,setdiff(mytree$tip.label,mytree$tip.label[iii]))
+mytree2$tip.label[999]
+genera3[999]
+mytree3 <- mytree2 
+mytree3$tip.label <- genera3
+
+
+```
+
