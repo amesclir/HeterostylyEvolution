@@ -7,6 +7,61 @@ editor_options:
   chunk_output_type: console
 ---
 
+Crossing lists
+
+```{r}
+
+library(ape)
+library(phytools)
+tree <- read.tree(file= "./run2/GBOTB.tre")
+## get a list of all genera
+tips<-tree$tip.label
+tips
+genera_all <-sapply(strsplit(tips,"_"),function(x) x[1])
+## here are our genera
+genera_all
+
+generaspecies <- cbind(tips,genera_all)
+generaspecies
+
+genera_het <- read.csv("ListofgeneraHeterostylous2.csv")
+genera_het <- as.character(genera_het[,1])
+genera_het
+
+ListofspeciesHeterostylous <- generaspecies[,1][generaspecies[,2] %in% genera_het]
+
+write(ListofspeciesHeterostylous , file = "ListofspeciesHeterostylous.txt")
+
+
+genera_het_sampled <- read.csv("Heterostylous_genera_2021-05-17.csv")
+genera_het_sampled[,1]
+genera_het_sampled <-sapply(strsplit(as.character(genera_het_sampled[,1]),"_"),function(x) x[1])
+genera_het_sampled
+
+genera_het_nsampled <- setdiff(genera_het,genera_het_sampled)
+genera_het_nsampled
+
+ListofspeciesHeterostylousnosampled <- generaspecies[,1][generaspecies[,2] %in% genera_het_nsampled]
+ListofspeciesHeterostylousnosampled
+write(ListofspeciesHeterostylousnosampled , file = "ListofspeciesHeterostylousnosampled.txt")
+
+
+genera_all_nsampled <-sapply(strsplit(ListofspeciesHeterostylousnosampled,"_"),function(x) x[1])
+## here are our genera
+genera_all_nsampled
+
+generaspecies_nsampled <- cbind(ListofspeciesHeterostylousnosampled,genera_all_nsampled)
+generaspecies_nsampled
+
+ListofspeciesHeterostylousnosampledonespecies <- generaspecies_nsampled[!duplicated(generaspecies_nsampled[,2]),1]
+ListofspeciesHeterostylousnosampledonespecies
+write(ListofspeciesHeterostylousnosampledonespecies , file = "ListofspeciesHeterostylousnosampledonespecies.txt")
+
+
+```
+
+
+Reconstruction
 ```{r setup, include=FALSE}
 
 library(ape)
